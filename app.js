@@ -1180,84 +1180,61 @@ function setupToolbar() {
 
 // 11. Modals and Media Action Handlers
 function setupModals() {
-    // Video player overlays
     const videoItems = document.querySelectorAll('.video-item');
-    const videoModal = document.getElementById('video-modal');
-    const videoPlayer = document.getElementById('project-video-player');
-    const videoTitle = document.getElementById('video-modal-title');
+    const docItems = document.querySelectorAll('.doc-item');
+    const driveFolderUrl = 'https://drive.google.com/drive/folders/1PcBKlWXs9o7yig4awD23NVET7KYIqEBA?usp=drive_link';
     
     videoItems.forEach(item => {
         item.addEventListener('click', () => {
-            const videoId = item.getAttribute('data-video');
-            let src = '';
-            let title = '';
-            
-            if (videoId === 'video1') {
-                src = 'Finished Reports-Map-Videos/1. Video 1- Project Intro Video Textile Waste Project.mp4';
-                title = 'Introduction Video - Textile Waste Circularity Project';
-            } else if (videoId === 'video2') {
-                src = 'Finished Reports-Map-Videos/2. Video 2 - Sunhari Devi (Subtitles).mp4';
-                title = 'Documentary Video - Sunhari Devi Story';
-            }
-            
-            videoPlayer.querySelector('source').src = src;
-            videoPlayer.load();
-            videoTitle.innerText = title;
-            videoModal.classList.remove('hidden');
-            videoPlayer.play();
+            window.open(driveFolderUrl, '_blank');
         });
     });
-    
-    document.getElementById('btn-close-video-modal').addEventListener('click', () => {
-        videoModal.classList.add('hidden');
-        videoPlayer.pause();
-    });
-
-    // PDF Booklet overlays
-    const docItems = document.querySelectorAll('.doc-item');
-    const pdfModal = document.getElementById('pdf-modal');
-    const pdfViewer = document.getElementById('project-pdf-viewer');
-    const pdfTitle = document.getElementById('pdf-modal-title');
     
     docItems.forEach(item => {
         item.addEventListener('click', () => {
-            const docId = item.getAttribute('data-doc');
-            let src = '';
-            let title = '';
-            
-            if (docId === 'report') {
-                src = 'Finished Reports-Map-Videos/4.Full Project Report.pdf';
-                title = 'Full Research Project Report - Life Cycle Assessment';
-            } else if (docId === 'booklet') {
-                src = 'Finished Reports-Map-Videos/5.Namtech report (Booket).pdf';
-                title = 'Namtech Report Handbook Booklet';
-            }
-            
-            pdfViewer.src = src;
-            pdfTitle.innerText = title;
-            pdfModal.classList.remove('hidden');
+            window.open(driveFolderUrl, '_blank');
         });
     });
     
-    document.getElementById('btn-close-pdf-modal').addEventListener('click', () => {
-        pdfModal.classList.add('hidden');
-        pdfViewer.src = '';
-    });
+    // Keep reference elements safely in case other code expects them to exist
+    const videoModal = document.getElementById('video-modal');
+    const videoPlayer = document.getElementById('project-video-player');
+    const pdfModal = document.getElementById('pdf-modal');
+    const pdfViewer = document.getElementById('project-pdf-viewer');
     
-    // Close modals on clicking overlay backdrop
-    videoModal.addEventListener('click', (e) => {
-        if (e.target === videoModal) {
+    const closeVideoBtn = document.getElementById('btn-close-video-modal');
+    if (closeVideoBtn && videoModal && videoPlayer) {
+        closeVideoBtn.addEventListener('click', () => {
             videoModal.classList.add('hidden');
             videoPlayer.pause();
-        }
-    });
+        });
+    }
     
-    pdfModal.addEventListener('click', (e) => {
-        if (e.target === pdfModal) {
+    const closePdfBtn = document.getElementById('btn-close-pdf-modal');
+    if (closePdfBtn && pdfModal && pdfViewer) {
+        closePdfBtn.addEventListener('click', () => {
             pdfModal.classList.add('hidden');
             pdfViewer.src = '';
-        }
-    });
+        });
+    }
+    
+    if (videoModal && videoPlayer) {
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                videoModal.classList.add('hidden');
+                videoPlayer.pause();
+            }
+        });
+    }
+    
+    if (pdfModal) {
+        pdfModal.addEventListener('click', (e) => {
+            if (e.target === pdfModal) {
+                pdfModal.classList.add('hidden');
+                pdfViewer.src = '';
+            }
+        });
+    }
 }
 
 function updateScrollbar() {
