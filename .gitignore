@@ -4,8 +4,7 @@
 *.svg
 Finished Reports-Map-Videos/
 
-# Tiled map images
-tiles/
+
 
 # Code artifacts and backups
 app_backup.js
