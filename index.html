@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- Main Stylesheet (Cache-busted) -->
+    <link rel="stylesheet" href="styles.css?v=2.3">
     
     <!-- Dependencies (CDNs) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -246,51 +246,54 @@
 
 
 
-                <!-- Floating Figma-style Navigation Toolbar -->
-                <div id="figma-toolbar" class="glass-panel">
-                    <div class="toolbar-section">
-                        <button id="tool-select" class="toolbar-btn active" title="Select & Inspect Tool (V)">
-                            <i data-lucide="mouse-pointer"></i>
-                        </button>
-                        <button id="tool-hand" class="toolbar-btn" title="Hand & Pan Tool (H)">
-                            <i data-lucide="hand"></i>
-                        </button>
-                    </div>
-                    <div class="toolbar-divider"></div>
-                    <div class="toolbar-section zoom-controls">
-                        <button id="toolbar-zoom-out" class="toolbar-btn" title="Zoom Out (Ctrl + -)"><i data-lucide="minus"></i></button>
-                        <div class="zoom-dropdown-container">
-                            <button id="toolbar-zoom-percent" class="toolbar-btn-text" title="Zoom Options">
-                                <span id="zoom-value">--%</span>
-                                <i data-lucide="chevron-down"></i>
-                            </button>
-                            <div id="zoom-dropdown-menu" class="zoom-dropdown-menu hidden">
-                                <button data-zoom="fit">Zoom to Fit (Shift + 1)</button>
-                                <button data-zoom="50">50%</button>
-                                <button data-zoom="100">100%</button>
-                                <button data-zoom="200">200%</button>
-                                <button data-zoom="400">400%</button>
-                            </div>
-                        </div>
-                        <button id="toolbar-zoom-in" class="toolbar-btn" title="Zoom In (Ctrl + +)"><i data-lucide="plus"></i></button>
-                    </div>
-                    <div class="toolbar-divider"></div>
-                    <div class="toolbar-section">
-                        <button id="toolbar-reset" class="toolbar-btn" title="Home (Zoom to Start)"><i data-lucide="home"></i></button>
-                        <button id="toolbar-shortcuts" class="toolbar-btn" title="Keyboard Shortcuts"><i data-lucide="keyboard"></i></button>
-                    </div>
-                </div>
-
-                <!-- Horizontal Viewport Scrollbar (Small Viewport Down) -->
-                <div id="horizontal-scrollbar-viewport" class="glass-panel">
-                    <div class="scrollbar-track">
-                        <img src="map_thumbnail.png" alt="Map Track Overview" class="scrollbar-track-bg">
-                        <div id="scrollbar-thumb-lens"></div>
-                    </div>
-                </div>
-
                 <!-- Leaflet tiled map container -->
-                <div id="leaflet-map" style="width: 100%; height: 100%;"></div>
+                <div id="leaflet-map"></div>
+
+                <!-- Bottom Unified Footer Bar -->
+                <div id="figma-toolbar" class="unified-footer-bar glass-panel">
+                    <!-- Left: Controllers Group (Tools + Zoom) -->
+                    <div class="footer-left-group">
+                        <div class="toolbar-section">
+                            <button id="tool-select" class="toolbar-btn active" title="Select & Inspect Tool (V)">
+                                <i data-lucide="mouse-pointer"></i>
+                            </button>
+                            <button id="tool-hand" class="toolbar-btn" title="Hand & Pan Tool (H)">
+                                <i data-lucide="hand"></i>
+                            </button>
+                            <button id="toolbar-reset" class="toolbar-btn" title="Home (Zoom to Start)"><i data-lucide="home"></i></button>
+                            <button id="toolbar-shortcuts" class="toolbar-btn" title="Keyboard Shortcuts"><i data-lucide="keyboard"></i></button>
+                        </div>
+                        
+                        <div class="toolbar-divider"></div>
+                        
+                        <!-- Zoom Controls -->
+                        <div class="toolbar-section zoom-controls">
+                            <button id="toolbar-zoom-out" class="toolbar-btn" title="Zoom Out (Ctrl + -)"><i data-lucide="minus"></i></button>
+                            <div class="zoom-dropdown-container">
+                                <button id="toolbar-zoom-percent" class="toolbar-btn-text" title="Zoom Options">
+                                    <span id="zoom-value">--%</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </button>
+                                <div id="zoom-dropdown-menu" class="zoom-dropdown-menu hidden">
+                                    <button data-zoom="fit">Zoom to Fit (Shift + 1)</button>
+                                    <button data-zoom="50">50%</button>
+                                    <button data-zoom="100">100%</button>
+                                    <button data-zoom="200">200%</button>
+                                    <button data-zoom="400">400%</button>
+                                </div>
+                            </div>
+                            <button id="toolbar-zoom-in" class="toolbar-btn" title="Zoom In (Ctrl + +)"><i data-lucide="plus"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Right: Small Viewer (Horizontal Scrollbar Viewport) -->
+                    <div id="horizontal-scrollbar-viewport">
+                        <div class="scrollbar-track">
+                            <img src="map_thumbnail.png" alt="Map Track Overview" class="scrollbar-track-bg">
+                            <div id="scrollbar-thumb-lens"></div>
+                        </div>
+                    </div>
+                </div>
             </main>
 
             <!-- Right Detail Inspector Panel -->
@@ -415,7 +418,7 @@
         </div>
     </div>
 
-    <!-- Main JavaScript Logic -->
-    <script src="app.js"></script>
+    <!-- Main JavaScript Logic (Cache-busted) -->
+    <script src="app.js?v=2.3"></script>
 </body>
 </html>

@@ -1182,34 +1182,70 @@ function setupToolbar() {
 function setupModals() {
     const videoItems = document.querySelectorAll('.video-item');
     const docItems = document.querySelectorAll('.doc-item');
-    const driveFolderUrl = 'https://drive.google.com/drive/folders/1PcBKlWXs9o7yig4awD23NVET7KYIqEBA?usp=drive_link';
-    
-    videoItems.forEach(item => {
-        item.addEventListener('click', () => {
-            window.open(driveFolderUrl, '_blank');
-        });
-    });
-    
-    docItems.forEach(item => {
-        item.addEventListener('click', () => {
-            window.open(driveFolderUrl, '_blank');
-        });
-    });
-    
-    // Keep reference elements safely in case other code expects them to exist
     const videoModal = document.getElementById('video-modal');
-    const videoPlayer = document.getElementById('project-video-player');
+    const videoTitle = document.getElementById('video-modal-title');
+    const videoContainer = document.querySelector('.video-container');
     const pdfModal = document.getElementById('pdf-modal');
     const pdfViewer = document.getElementById('project-pdf-viewer');
+    const pdfTitle = document.getElementById('pdf-modal-title');
     
+    // Video click handler: embed Google Drive video preview player
+    videoItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const videoId = item.getAttribute('data-video');
+            let fileId = '';
+            let title = '';
+            
+            if (videoId === 'video1') {
+                fileId = '1t2ltOneOdSFByVrCpi7YfjFHfK6756HA';
+                title = 'Introduction Video - Textile Waste Circularity Project';
+            } else if (videoId === 'video2') {
+                fileId = '19_NYJ8n3rTjcOyt8YX1JCkRqPPKvZ_lY';
+                title = 'Documentary Video - Sunhari Devi Story';
+            }
+            
+            if (fileId && videoContainer && videoModal && videoTitle) {
+                videoTitle.innerText = title;
+                // Replace the HTML5 <video> tag with an iframe to load Google Drive's stream player
+                videoContainer.innerHTML = `<iframe id="project-video-player" src="https://drive.google.com/file/d/${fileId}/preview" width="100%" height="100%" style="border: none;" allow="autoplay" allowfullscreen></iframe>`;
+                videoModal.classList.remove('hidden');
+            }
+        });
+    });
+    
+    // Close video handler: empty the container to stop playback
     const closeVideoBtn = document.getElementById('btn-close-video-modal');
-    if (closeVideoBtn && videoModal && videoPlayer) {
+    if (closeVideoBtn && videoModal && videoContainer) {
         closeVideoBtn.addEventListener('click', () => {
             videoModal.classList.add('hidden');
-            videoPlayer.pause();
+            videoContainer.innerHTML = '';
         });
     }
     
+    // PDF click handler: embed Google Drive PDF preview in iframe
+    docItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const docId = item.getAttribute('data-doc');
+            let fileId = '';
+            let title = '';
+            
+            if (docId === 'report') {
+                fileId = '14R8qE6UXp3qhdwpUi3pwFTv1BRk9k62r';
+                title = 'Full Research Project Report - Life Cycle Assessment';
+            } else if (docId === 'booklet') {
+                fileId = '17AAxRV5GwhWxqtXgF3E47SZdfXP6mOTg';
+                title = 'Namtech Report Handbook Booklet';
+            }
+            
+            if (fileId && pdfViewer && pdfModal && pdfTitle) {
+                pdfTitle.innerText = title;
+                pdfViewer.src = `https://drive.google.com/file/d/${fileId}/preview`;
+                pdfModal.classList.remove('hidden');
+            }
+        });
+    });
+    
+    // Close PDF handler
     const closePdfBtn = document.getElementById('btn-close-pdf-modal');
     if (closePdfBtn && pdfModal && pdfViewer) {
         closePdfBtn.addEventListener('click', () => {
@@ -1218,16 +1254,17 @@ function setupModals() {
         });
     }
     
-    if (videoModal && videoPlayer) {
+    // Close modals on clicking overlay backdrop
+    if (videoModal && videoContainer) {
         videoModal.addEventListener('click', (e) => {
             if (e.target === videoModal) {
                 videoModal.classList.add('hidden');
-                videoPlayer.pause();
+                videoContainer.innerHTML = '';
             }
         });
     }
     
-    if (pdfModal) {
+    if (pdfModal && pdfViewer) {
         pdfModal.addEventListener('click', (e) => {
             if (e.target === pdfModal) {
                 pdfModal.classList.add('hidden');

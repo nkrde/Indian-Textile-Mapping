@@ -777,6 +777,8 @@ body.light-theme .control-group {
    Center Canvas Panel (Map)
    ========================================================================== */
 #map-container {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     height: 100%;
     position: relative;
@@ -933,51 +935,59 @@ body.light-theme #minimap-container {
     cursor: grabbing;
 }
 
-/* Figma-style Navigation Toolbar */
+/* Figma-style Navigation Toolbar (Unified Bottom Bar) */
 #figma-toolbar {
-    position: absolute;
-    bottom: 64px; /* Repositioned to sit elegantly above the horizontal scrollbar */
-    left: 50%;
-    transform: translateX(-50%);
-    height: 48px;
-    background: rgba(18, 24, 38, 0.85);
-    border: 1px solid var(--border-color);
-    border-radius: 24px;
+    width: 100%;
+    height: 60px;
+    background: #0b0f17;
+    border-top: 1px solid var(--border-color);
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
     display: flex;
     align-items: center;
-    padding: 0 16px;
-    gap: 8px;
+    justify-content: space-between;
+    padding: 0 24px;
     z-index: 1105;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
     transition: background var(--transition-speed), border-color var(--transition-speed);
+    box-sizing: border-box;
+    flex-shrink: 0;
 }
 body.light-theme #figma-toolbar {
-    background: rgba(255, 255, 255, 0.85);
+    background: #f8fafc;
+}
+
+.footer-left-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
 /* Horizontal Scrollbar Viewport (Small Viewport Down / Timeline scroll) */
 #horizontal-scrollbar-viewport {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    max-width: 800px;
-    min-width: 400px;
-    height: 32px;
-    z-index: 1100;
-    border-radius: 16px;
-    padding: 4px;
-    background: rgba(18, 24, 38, 0.85);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    flex: 1;
+    margin-left: 24px;
+    height: 36px;
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    z-index: 1;
+    border-radius: 18px;
+    padding: 3px;
+    background: rgba(18, 24, 38, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: none;
     display: flex;
     align-items: center;
     overflow: hidden;
     transition: background var(--transition-speed), border-color var(--transition-speed);
 }
 body.light-theme #horizontal-scrollbar-viewport {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.05);
 }
 
 .scrollbar-track {
@@ -1467,6 +1477,9 @@ svg [id^="text_"]:hover, svg text:hover {
    ========================================================================== */
 #leaflet-map {
     background-color: var(--bg-main) !important;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
 }
 
 /* Hide Leaflet default zoom controls (we use our premium custom header controls) */
