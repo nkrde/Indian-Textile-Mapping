@@ -1,0 +1,18 @@
+# Binary files and media
+*.mp4
+*.pdf
+*.svg
+Finished Reports-Map-Videos/
+
+# Tiled map images
+tiles/
+
+# Code artifacts and backups
+app_backup.js
+scratch/
+__pycache__/
+*.log
+
+# OS metadata
+.DS_Store
+Thumbs.db

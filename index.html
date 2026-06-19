@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redefining Waste: Circular Textile System Hub - World Class Interactive Viewer</title>
+    <meta name="description" content="An interactive, high-fidelity system mapping viewer for the Kandla Special Economic Zone (KASEZ) textile waste circularity project. View maps, reports, videos, and explore guided tours.">
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Dependencies (CDNs) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="dark-theme">
+
+    <div id="app">
+        <!-- Top Navigation Header -->
+        <header id="header" class="glass-panel">
+            <div class="header-left">
+                <div class="logo-container">
+                    <i data-lucide="recycle" class="text-emerald animate-spin-slow"></i>
+                    <div>
+                        <h1>Circular Textile Systems</h1>
+                        <p class="subtitle">Redefining Waste: Value Chain Mapping</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Central Search Bar with Autocomplete -->
+            <div class="header-center">
+                <div class="search-container">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Search 1,440+ map nodes, labels, and systems..." autocomplete="off">
+                    <button id="search-clear-btn" style="display: none;"><i data-lucide="x"></i></button>
+                    <div id="search-results-dropdown" class="dropdown-panel hidden">
+                        <!-- Search results injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toolbar Controls -->
+            <div class="header-right">
+                <div class="control-group">
+                    <button id="btn-theme-toggle" class="btn-icon" title="Toggle Light/Dark Mode"><i data-lucide="sun" id="theme-icon"></i></button>
+                    <button id="btn-sidebar-toggle" class="btn-icon" title="Toggle Sidebar"><i data-lucide="sidebar"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace Layout -->
+        <div class="workspace-body">
+            
+            <!-- Left Navigation Sidebar -->
+            <aside id="sidebar" class="glass-panel">
+                <!-- Sidebar Tabs Navigation -->
+                <div class="sidebar-tabs">
+                    <button class="tab-btn active" data-tab="tours">
+                        <i data-lucide="milestone"></i>
+                        <span>Map Sections</span>
+                    </button>
+                    <button class="tab-btn" data-tab="media">
+                        <i data-lucide="folder-open"></i>
+                        <span>Library & Media</span>
+                    </button>
+                    <button class="tab-btn" data-tab="about">
+                        <i data-lucide="info"></i>
+                        <span>About Map</span>
+                    </button>
+                </div>
+
+                <!-- Tab Content: Map Sections -->
+                <div class="tab-content active" id="tab-tours">
+                    <div class="section-intro">
+                        <h3>System Map Sections</h3>
+                        <p>Quickly jump to and explore key sections of the circular textile value chain.</p>
+                    </div>
+                    
+                    <div class="tours-list">
+                        <!-- Tour 1: Circular Value Chain -->
+                        <div class="tour-card" data-tour="value-chain">
+                            <div class="tour-header">
+                                <span class="tour-badge badge-primary">Process</span>
+                                <h4>Circular Value Chain</h4>
+                            </div>
+                            <p>Follow the full lifecycle from raw textile imports to manufacturing, processing, and exports.</p>
+                            <div class="tour-footer">
+                                <button class="btn-start-tour">View Section <i data-lucide="arrow-right"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Tour 2: Rekha's Story -->
+                        <div class="tour-card" data-tour="rekha">
+                            <div class="tour-header">
+                                <span class="tour-badge badge-social">Social</span>
+                                <h4>Social Narrative: Rekha's Story</h4>
+                            </div>
+                            <p>Experience the human dimension. Step through the daily schedule and manual sorting line conditions of factory worker Rekha.</p>
+                            <div class="tour-footer">
+                                <button class="btn-start-tour">View Section <i data-lucide="arrow-right"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Tour 3: Environmental Impact -->
+                        <div class="tour-card" data-tour="lca">
+                            <div class="tour-header">
+                                <span class="tour-badge badge-env">LCA</span>
+                                <h4>LCA & Environmental Impact</h4>
+                            </div>
+                            <p>Investigate the quantified carbon emissions (Scope 2), energy consumptions, and health impacts in DALYs.</p>
+                            <div class="tour-footer">
+                                <button class="btn-start-tour">View Section <i data-lucide="arrow-right"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Tour 4: Policy & Regulations -->
+                        <div class="tour-card" data-tour="policy">
+                            <div class="tour-header">
+                                <span class="tour-badge badge-policy">Policy</span>
+                                <h4>SEZ Policy & Compliance</h4>
+                            </div>
+                            <p>Learn about customs guidelines, DGFT clothing import licenses, and CPCB hazardous waste compliance rules.</p>
+                            <div class="tour-footer">
+                                <button class="btn-start-tour">View Section <i data-lucide="arrow-right"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Tour 5: Lighthouse Model -->
+                        <div class="tour-card" data-tour="lighthouse">
+                            <div class="tour-header">
+                                <span class="tour-badge badge-tech">Future</span>
+                                <h4>The Lighthouse Model</h4>
+                            </div>
+                            <p>Discover the future roadmap: AI-powered sorting, modular automation, digital twins, and Extended Producer Responsibility (EPR).</p>
+                            <div class="tour-footer">
+                                <button class="btn-start-tour">View Section <i data-lucide="arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Library & Media -->
+                <div class="tab-content" id="tab-media">
+                    <div class="section-intro">
+                        <h3>Project Media Library</h3>
+                        <p>Access documentary videos and comprehensive research booklets compiled for high-stake stakeholders.</p>
+                    </div>
+
+                    <!-- Video Section -->
+                    <div class="media-section">
+                        <h5><i data-lucide="video"></i> Documentary Videos</h5>
+                        <div class="media-grid">
+                            <div class="media-item video-item" data-video="video1">
+                                <div class="media-thumbnail">
+                                    <i data-lucide="play" class="play-icon"></i>
+                                    <div class="duration">04:12</div>
+                                </div>
+                                <div class="media-info">
+                                    <h6>Textile Waste Project Intro</h6>
+                                    <p>Comprehensive overview of circularity dynamics in Panipat and KASEZ.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="media-item video-item" data-video="video2">
+                                <div class="media-thumbnail">
+                                    <i data-lucide="play" class="play-icon"></i>
+                                    <div class="duration">06:45</div>
+                                </div>
+                                <div class="media-info">
+                                    <h6>Sunhari Devi Story</h6>
+                                    <p>Social documentary highlighting worker conditions and livelihood impacts.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Documents Section -->
+                    <div class="media-section">
+                        <h5><i data-lucide="file-text"></i> Reports & Booklets</h5>
+                        <div class="media-grid">
+                            <div class="media-item doc-item" data-doc="report">
+                                <div class="media-thumbnail doc-thumb">
+                                    <i data-lucide="file-text" class="doc-icon text-emerald"></i>
+                                </div>
+                                <div class="media-info">
+                                    <h6>Full Project Report</h6>
+                                    <p>Life Cycle Assessments & Material Flow Analysis data sheets (PDF).</p>
+                                </div>
+                            </div>
+
+                            <div class="media-item doc-item" data-doc="booklet">
+                                <div class="media-thumbnail doc-thumb">
+                                    <i data-lucide="book-open" class="doc-icon text-indigo"></i>
+                                </div>
+                                <div class="media-info">
+                                    <h6>Namtech Report Booklet</h6>
+                                    <p>Detailed architectural handbook of the circular value network (PDF).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: About Map -->
+                <div class="tab-content" id="tab-about">
+                    <div class="about-container">
+                        <h3>Redefining Waste: Circular Textile Waste Map</h3>
+                        <div class="about-desc">
+                            <p>This systemic design mapping captures the complex circular value chain of imported and domestic textile waste processing in the **Kandla Special Economic Zone (KASEZ)** in Gujarat, India.</p>
+                            <p>Giga-mapping is a tool used in systemic design to visualize highly complex socio-technical networks, showing physical material flows, policy dependencies, environmental emissions, and human worker schedules simultaneously.</p>
+                        </div>
+                        
+                        <div class="legend-panel">
+                            <h5><i data-lucide="map"></i> Map System Legend</h5>
+                            <ul class="legend-items">
+                                <li><span class="legend-color" style="background: #10B981;"></span> <strong>Green Paths:</strong> Recycled material flows / circular loops</li>
+                                <li><span class="legend-color" style="background: #3B82F6;"></span> <strong>Blue Nodes:</strong> Technical infrastructure & machinery</li>
+                                <li><span class="legend-color" style="background: #EF4444;"></span> <strong>Red Values:</strong> Environmental carbon & particulate emissions</li>
+                                <li><span class="legend-color" style="background: #F59E0B;"></span> <strong>Amber Outlines:</strong> Policy agencies & regulatory frameworks</li>
+                                <li><span class="legend-color" style="background: #8B5CF6;"></span> <strong>Violet Texts:</strong> Worker activity & narrative scripts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tour Player removed -->
+            </aside>
+
+            <!-- Center Interactive Map Canvas -->
+            <main id="map-container">
+                <!-- Loading State overlay -->
+                <div id="loading-overlay">
+                    <div class="spinner-container">
+                        <div class="spinner"></div>
+                        <p class="loading-msg">Assembling Circular System Map...</p>
+                        <p class="loading-sub">Optimizing vectors & resolving 1,095 high-resolution raster images</p>
+                    </div>
+                </div>
+
+
+
+                <!-- Floating Figma-style Navigation Toolbar -->
+                <div id="figma-toolbar" class="glass-panel">
+                    <div class="toolbar-section">
+                        <button id="tool-select" class="toolbar-btn active" title="Select & Inspect Tool (V)">
+                            <i data-lucide="mouse-pointer"></i>
+                        </button>
+                        <button id="tool-hand" class="toolbar-btn" title="Hand & Pan Tool (H)">
+                            <i data-lucide="hand"></i>
+                        </button>
+                    </div>
+                    <div class="toolbar-divider"></div>
+                    <div class="toolbar-section zoom-controls">
+                        <button id="toolbar-zoom-out" class="toolbar-btn" title="Zoom Out (Ctrl + -)"><i data-lucide="minus"></i></button>
+                        <div class="zoom-dropdown-container">
+                            <button id="toolbar-zoom-percent" class="toolbar-btn-text" title="Zoom Options">
+                                <span id="zoom-value">--%</span>
+                                <i data-lucide="chevron-down"></i>
+                            </button>
+                            <div id="zoom-dropdown-menu" class="zoom-dropdown-menu hidden">
+                                <button data-zoom="fit">Zoom to Fit (Shift + 1)</button>
+                                <button data-zoom="50">50%</button>
+                                <button data-zoom="100">100%</button>
+                                <button data-zoom="200">200%</button>
+                                <button data-zoom="400">400%</button>
+                            </div>
+                        </div>
+                        <button id="toolbar-zoom-in" class="toolbar-btn" title="Zoom In (Ctrl + +)"><i data-lucide="plus"></i></button>
+                    </div>
+                    <div class="toolbar-divider"></div>
+                    <div class="toolbar-section">
+                        <button id="toolbar-reset" class="toolbar-btn" title="Home (Zoom to Start)"><i data-lucide="home"></i></button>
+                        <button id="toolbar-shortcuts" class="toolbar-btn" title="Keyboard Shortcuts"><i data-lucide="keyboard"></i></button>
+                    </div>
+                </div>
+
+                <!-- Horizontal Viewport Scrollbar (Small Viewport Down) -->
+                <div id="horizontal-scrollbar-viewport" class="glass-panel">
+                    <div class="scrollbar-track">
+                        <img src="map_thumbnail.png" alt="Map Track Overview" class="scrollbar-track-bg">
+                        <div id="scrollbar-thumb-lens"></div>
+                    </div>
+                </div>
+
+                <!-- Leaflet tiled map container -->
+                <div id="leaflet-map" style="width: 100%; height: 100%;"></div>
+            </main>
+
+            <!-- Right Detail Inspector Panel -->
+            <aside id="inspector" class="glass-panel collapsed">
+                <div class="inspector-header">
+                    <h4><i data-lucide="layers" class="text-emerald"></i> Node Inspector</h4>
+                    <button id="btn-close-inspector" class="btn-icon-small"><i data-lucide="x"></i></button>
+                </div>
+                <div class="inspector-body">
+                    <div class="inspector-section" id="inspector-node-title-section">
+                        <h3 id="inspector-title">Import Regulations</h3>
+                        <span class="inspector-type" id="inspector-badge">Regulatory Node</span>
+                    </div>
+                    
+                    <div class="inspector-section">
+                        <label>Extracted Details & Content</label>
+                        <div id="inspector-desc" class="inspector-desc-box">
+                            No node selected. Click on any text, label, or path on the map to inspect its details and coordinates.
+                        </div>
+                    </div>
+
+                    <div class="inspector-section">
+                        <label>Map Coordinates</label>
+                        <table class="coord-table">
+                            <tr>
+                                <td>Center X:</td>
+                                <td id="coord-cx">--</td>
+                            </tr>
+                            <tr>
+                                <td>Center Y:</td>
+                                <td id="coord-cy">--</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="inspector-actions">
+                        <button id="btn-inspector-focus" class="btn-primary"><i data-lucide="focus"></i> Focus & Center</button>
+                        <button id="btn-inspector-share" class="btn-primary-outline"><i data-lucide="copy"></i> Copy Coordinates</button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Documentary Video Overlay Modal -->
+    <div id="video-modal" class="modal-overlay hidden">
+        <div class="modal-wrapper video-modal-wrapper">
+            <div class="modal-header-bar">
+                <h4 id="video-modal-title">Documentary Player</h4>
+                <button id="btn-close-video-modal" class="btn-icon-small"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body-content video-container">
+                <video id="project-video-player" controls preload="metadata">
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Report Viewer Overlay Modal -->
+    <div id="pdf-modal" class="modal-overlay hidden">
+        <div class="modal-wrapper pdf-modal-wrapper">
+            <div class="modal-header-bar">
+                <h4 id="pdf-modal-title">Report Booklet Viewer</h4>
+                <button id="btn-close-pdf-modal" class="btn-icon-small"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body-content pdf-container">
+                <!-- If default iframe doesn't show properly due to browser settings, standard fallbacks are supplied -->
+                <iframe id="project-pdf-viewer" src="" width="100%" height="100%" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="shortcuts-modal" class="modal-overlay hidden">
+        <div class="modal-wrapper info-modal-wrapper animate-modal-in">
+            <div class="modal-header-bar">
+                <h4 style="display: flex; align-items: center; gap: 8px;"><i data-lucide="keyboard" class="text-emerald"></i> Figma Board Navigation & Shortcuts</h4>
+                <button id="btn-close-shortcuts-modal" class="btn-icon-small"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body-content shortcuts-container">
+                <div class="shortcuts-grid">
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys"><kbd>V</kbd></div>
+                        <div class="shortcut-desc">Select & Inspect Tool</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys"><kbd>H</kbd></div>
+                        <div class="shortcut-desc">Hand / Pan Tool</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys"><kbd>Space</kbd> + Drag</div>
+                        <div class="shortcut-desc">Temporary Hand Tool pan</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys"><kbd>Ctrl</kbd> + Wheel</div>
+                        <div class="shortcut-desc">Figma-style zoom at cursor</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys"><kbd>Shift</kbd> + Wheel</div>
+                        <div class="shortcut-desc">Horizontal pan scroll</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys"><kbd>Wheel</kbd> or <kbd>Drag</kbd></div>
+                        <div class="shortcut-desc">Vertical / 2D touchpad pan</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys"><kbd>Shift</kbd> + <kbd>1</kbd></div>
+                        <div class="shortcut-desc">Zoom to Fit whole map</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys"><kbd>Shift</kbd> + <kbd>0</kbd> or <kbd>Ctrl</kbd> + <kbd>0</kbd></div>
+                        <div class="shortcut-desc">Zoom to 100% scale</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys"><kbd>Shift</kbd> + <kbd>2</kbd></div>
+                        <div class="shortcut-desc">Zoom to Selection (selected node)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main JavaScript Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
